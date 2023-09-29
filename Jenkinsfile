@@ -1,3 +1,5 @@
+USER root
+
 pipeline {
     agent any
 
