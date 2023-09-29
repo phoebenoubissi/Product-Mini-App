@@ -1,5 +1,3 @@
-USER root
-
 pipeline {
     agent any
 
@@ -12,6 +10,13 @@ pipeline {
             steps {
                 // Checkout your Flask application code from a Git repository
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/phoebenoubissi/Product-Mini-App']]])
+
+                script {
+                    sshagent(credentials: ['ba987622-3627-420e-8c09-018d8b015c51']) {
+                        // Clone your Git repository or perform SSH operations here
+                        sh 'git clone https://github.com/phoebenoubissi/Product-Mini-App'
+                    }
+                }
             }
         }
 
