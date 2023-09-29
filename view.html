@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Catalog</title>
+</head>
+<body>
+  <h1>Product Catalog</h1>
+  <ul id="products"></ul>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: "http://localhost:5000/products",
+        method: "GET",
+        success: function(data) {
+          for (var i = 0; i < data.length; i++) {
+            var product = data[i];
+            var li = $("<li></li>");
+            li.text(product.name);
+            $("#products").append(li);
+          }
+        }
+      });
+
+      $(document).ready(function() {
+      $.ajax({
+        url: "http://localhost:5000/products",
+        method: "GET",
+        success: function(data) {
+          var formattedJson = JSON.stringify(data, null, 2); // Indent with 2 spaces for readability
+          var pre = $("<pre></pre>").text(formattedJson); // Create a <pre> element
+          $("#products").append(pre); // Append the <pre> element to the "products" ul
+        }
+      });
+    });
+
+      $("#post-product-form").submit(function(event) {
+        event.preventDefault();
+
+        var name = $("#product-name").val();
+        var price = $("#product-price").val();
+
+        $.ajax({
+          url: "http://localhost:5000/products",
+          method: "POST",
+          data: JSON.stringify({ // Convert data to JSON format
+            name: name,
+            price: price
+          }),
+          contentType: "application/json", // Set the Content-Type header
+          success: function(data) {
+            // Reload the page to show the new product
+            location.reload();
+          }
+        });
+      });
+    });
+  </script>
+  <form id="post-product-form" method="POST">
+    <input type="text" id="product-name" placeholder="Product name">
+    <input type="number" id="product-price" placeholder="Product price">
+    <input type="submit" value="Post product">
+  </form>
+</body>
+</html>
