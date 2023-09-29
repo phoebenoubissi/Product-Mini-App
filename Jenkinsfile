@@ -1,41 +1,6 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                // Check out your source code from a version control system (e.g., Git)
-                git url: 'https://github.com/your/repo.git'
-            }
-        }
-        stage('Build') {
-            steps {
-                // Build your Python application (e.g., create a virtual environment, install dependencies)
-                sh 'python -m venv venv'
-                sh 'source venv/bin/activate'
-                sh 'pip install -r requirements.txt'
-            }
-        }
-        stage('Test') {
-            steps {
-                // Run your tests
-                sh 'python -m unittest discover'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                // Deploy your application (e.g., Dockerize it and push to a registry)
-                sh 'docker build -t myapp .'
-                sh 'docker push myapp:latest'
-                // Deploy to your server or container orchestration platform
-                sh 'ssh user@your-server "docker pull myapp:latest && docker-compose up -d"'
-            }
-        }
-    }
-}
-pipeline {
-    agent any
-
     environment {
         DOCKER_IMAGE = 'phoebe-products:latest'
     }
@@ -82,4 +47,3 @@ pipeline {
         }
     }
 }
-
