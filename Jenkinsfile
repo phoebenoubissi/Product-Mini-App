@@ -33,9 +33,9 @@ pipeline {
             steps {
                 script {
                     // Build a Docker image for your Flask application
-                    sh 'sudo visudo'
-                    sh 'phoebenoubissi ALL=(ALL) NOPASSWD: /usr/bin/docker build -t $DOCKER_IMAGE .'
-                    //sh 'sudo docker build -t $DOCKER_IMAGE .'
+                   // sh 'sudo visudo'
+                    //sh 'phoebenoubissi ALL=(ALL) NOPASSWD: /usr/bin/docker build -t $DOCKER_IMAGE .'
+                    sh 'docker build -t $DOCKER_IMAGE .'
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     // Deploy your Docker container (adjust this based on your deployment strategy)
-                    sh 'sudo docker run -d -p 5000:5000 $DOCKER_IMAGE'
+                    sh 'docker run -d -p 5000:5000 $DOCKER_IMAGE'
                 }
             }
         }
