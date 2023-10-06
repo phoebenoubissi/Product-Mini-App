@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'python products.py'
+        sh 'python3 products.py'
       }
     }
   }
